@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <form>
+      <label for="input">username</label
+      ><input type="text" id="input" name="input" /><br />
+      <label for="password">password</label
+      ><input type="password" id="password" name="password" /><br />
+      <select name="role" id="role">
+        <option value="student">student</option>
+        <option value="admin">admin</option>
+      </select>
+      <button type="submit">Login</button>
+    </form>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const form = document.querySelector("form");
+    const p = document.createElement("p");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let formData = new FormData(form);
+      axios
+        .post("http://localhost:8000/api/v1/auth/login", formData, {
+          withCredentials: true, // Ensure cookies are sent with the request
+        })
+        .then((response) => {
+          console.log("Login successful", response.data);
+          if (response.data.success) {
+            location.href = location.origin;
+          }
+        })
+        .catch((error) => {
+          console.error("Login failed", error.response.data);
+        });
+      /*console.log(response);
+      // We can redirect to the login/home page if user registers successfully.
+      p.textContent = response.data.message;
+      document.body.appendChild(p);*/
+    });
+  </script>
+</html>
