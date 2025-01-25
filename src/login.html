@@ -39,7 +39,12 @@
         const result = await response.json();
         if (response.ok) {
           console.log("Login successful:", result);
-          window.location.href = "/"; // Redirect to home after login
+          if (result.data.role == "student") {
+            window.location.href = "/student-dashboard.html"; // Redirect to home after login
+          } else {
+            window.location.href =
+              window.location.origin + "/admin-dashboard.html";
+          }
         } else {
           console.error("Login failed:", result.message);
         }
