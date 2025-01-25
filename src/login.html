@@ -21,27 +21,31 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     const form = document.querySelector("form");
-    const p = document.createElement("p");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      let formData = new FormData(form);
-      axios
-        .post("http://localhost:8000/api/v1/auth/login", formData, {
-          withCredentials: true, // Ensure cookies are sent with the request
-        })
-        .then((response) => {
-          console.log("Login successful", response.data);
-          if (response.data.success) {
-            location.href = location.origin;
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(
+          "http://localhost:8000/api/v1/auth/login",
+          {
+            method: "POST",
+            body: formData,
+            credentials: "include", // This ensures cookies are included
           }
-        })
-        .catch((error) => {
-          console.error("Login failed", error.response.data);
-        });
-      /*console.log(response);
-      // We can redirect to the login/home page if user registers successfully.
-      p.textContent = response.data.message;
-      document.body.appendChild(p);*/
+        );
+
+        const result = await response.json();
+        if (response.ok) {
+          console.log("Login successful:", result);
+          window.location.href = "/"; // Redirect to home after login
+        } else {
+          console.error("Login failed:", result.message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
     });
   </script>
 </html>

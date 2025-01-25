@@ -8,27 +8,31 @@
   <body></body>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    async function getUser() {
-      const p = document.createElement;
-      const response = await axios
-        .get("http://127.0.0.1:8000/api/v1/student/getuser/")
-        .catch((error) => {
-          if (error.response) {
-            // console.log(error.response.data.message.message);
-            p.textContent = error.response;
-            console.log(error);
-            // document.body.appendChild(p);
-          } else if (error.request) {
-            // console.log(error.request);
-          } else {
-            console.log("Error", error.message);
+    async function fetchHomePage() {
+      try {
+        const response = await fetch(
+          "http://localhost:8000/api/v1/student/getuser",
+          {
+            method: "GET",
+            credentials: "include", // This ensures cookies are sent with the request
           }
-          console.log(error.config);
-        });
-      console.log(response);
-      //   p.textContent = response.data.message;
-      //   document.body.appendChild(p);
+        );
+
+        const result = await response.json();
+        if (response.ok) {
+          console.log("Home Page Data:", result);
+          console.log("Home Page Data:", result.data);
+          return result;
+        } else {
+          console.error("Failed to load home page:", result.message);
+        }
+      } catch (error) {
+        console.error("Error fetching home page:", error);
+      }
+
     }
-    getUser();
+    
+    // Call the function when the page loads
+    const user = await fetchHomePage();
   </script>
 </html>
