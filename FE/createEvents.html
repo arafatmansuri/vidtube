@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Event</title>
     <style>
-        body {
+      body {
         background: black;
         color: green;
       }
@@ -17,23 +17,53 @@
         padding-top: 60px;
         box-sizing: border-box;
       }
-      input{
+      input {
         background: gray;
       }
-      textarea{
+      textarea {
         background: gray;
       }
     </style>
   </head>
   <body>
     <form>
-      <label for="Etitle">Title</label>
-      <input type="text" id="Etitle" name="Etitle" /> <br>
-      <label for="Edisc">discription</label>
-      <textarea name="Edisc" id="Edisc"></textarea><br>
-      <label for="Edate">Event Date</label>
-      <input type="datetime-local" name="Edate" id="Edate" /><br>
+      <label for="eventTitle">Title</label>
+      <input type="text" id="eventTitle" name="eventTitle" /> <br />
+      <label for="eventDisc">discription</label>
+      <textarea name="eventDisc" id="eventDisc"></textarea><br />
+      <label for="eventDate">Event Date</label>
+      <input type="datetime-local" name="eventDate" id="eventDate" /><br />
+      <label for="eventImage"></label>
+      <input type="file" name="eventImage" id="eventImage" /><br />
       <button type="submit">Create</button>
     </form>
+    <script>
+      const form = document.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch(
+            "http://localhost:8000/api/v1/event/create",
+            {
+              method: "POST",
+              body: formData,
+              credentials: "include", // This ensures cookies are included
+            }
+          );
+
+          const result = await response.json();
+          if (response.ok) {
+            console.log("Event Created:", result);
+          } else {
+            console.error("Event Creation failed:", result.message);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+    </script>
   </body>
 </html>
