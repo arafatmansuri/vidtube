@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Event</title>
+    <style>
+        body {
+        background: black;
+        color: green;
+      }
+      .box {
+        height: 150px;
+        width: 200px;
+        border: 2px solid green;
+        text-align: center;
+        padding-top: 60px;
+        box-sizing: border-box;
+      }
+      input{
+        background: gray;
+      }
+      textarea{
+        background: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="Etitle">Title</label>
+      <input type="text" id="Etitle" name="Etitle" /> <br>
+      <label for="Edisc">discription</label>
+      <textarea name="Edisc" id="Edisc"></textarea><br>
+      <label for="Edate">Event Date</label>
+      <input type="datetime-local" name="Edate" id="Edate" /><br>
+      <button type="submit">Create</button>
+    </form>
+  </body>
+</html>

@@ -22,6 +22,8 @@ async function fetchHomePage() {
 async function displayData() {
   const user = await fetchHomePage();
   console.log(user);
+  const p = document.querySelector(".welcome");
+  p.innerHTML = `Welcome ${user.fullName}`;
 }
 
 displayData();
